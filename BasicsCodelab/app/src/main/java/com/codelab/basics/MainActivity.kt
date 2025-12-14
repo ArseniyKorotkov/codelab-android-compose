@@ -19,8 +19,12 @@ package com.codelab.basics
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,21 +39,29 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BasicsCodelabTheme {
-                MyApp(modifier = Modifier.fillMaxSize())
+                MyApp(
+                    nameList = listOf("World", "Compose"),
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
     }
 }
 
 @Composable
-fun MyApp(modifier: Modifier = Modifier) {
+fun MyApp(
+    nameList: List<String>,
+    modifier: Modifier = Modifier
+) {
     Surface(
         color = MaterialTheme.colorScheme.background,
-        modifier = modifier
+        modifier = modifier.padding(vertical = 4.dp)
     ) {
-        Greeting(
-            name = "Android"
-        )
+        Column {
+            nameList.forEach {
+                Greeting(name = it)
+            }
+        }
     }
 }
 
@@ -60,20 +72,38 @@ fun Greeting(
 ) {
     Surface(
         color = MaterialTheme.colorScheme.primary,
-        modifier = modifier
+        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        Text(
-            text = "Hello, $name!",
-            modifier = Modifier.padding(24.dp)
-        )
+        Row(
+            modifier = Modifier
+                .padding(24.dp)
+                .fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.weight(1f)
+
+            ) {
+                Text(text = "Hello,")
+                Text(text = "$name!")
+            }
+
+            ElevatedButton(
+                onClick = {/* TODO */ }
+            ) {
+                Text("Show more")
+            }
+        }
     }
 }
 
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    widthDp = 320
+)
 @Composable
 fun MyAppPreview() {
     BasicsCodelabTheme {
-        MyApp()
+        MyApp(nameList = listOf("World", "Compose"))
     }
 }
