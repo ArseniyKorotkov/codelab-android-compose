@@ -44,7 +44,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             BasicsCodelabTheme {
                 MyApp(
-                    nameList = listOf("World", "Compose"),
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -53,7 +52,23 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(
+fun MyApp(modifier: Modifier = Modifier) {
+    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    if (shouldShowOnboarding) {
+        OnboardingScreen(
+            onContinueClicked = { shouldShowOnboarding = false },
+            modifier = modifier
+        )
+    } else {
+        Greetings(
+            nameList = listOf("World", "Compose"),
+            modifier = modifier
+        )
+    }
+}
+
+@Composable
+fun Greetings(
     nameList: List<String>,
     modifier: Modifier = Modifier
 ) {
@@ -111,6 +126,6 @@ fun Greeting(
 @Composable
 fun MyAppPreview() {
     BasicsCodelabTheme {
-        MyApp(nameList = listOf("World", "Compose"))
+        MyApp()
     }
 }
