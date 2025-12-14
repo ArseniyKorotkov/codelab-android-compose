@@ -20,9 +20,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +28,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,9 +42,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import com.codelab.basics.ui.theme.BasicsCodelabTheme
 
@@ -98,13 +100,12 @@ fun Greeting(
     modifier: Modifier = Modifier
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val extraPadding by animateDpAsState(
-        targetValue = if (expanded) 48.dp else 0.dp,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        )
-    )
+    val imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore
+    val contentDescription = if (expanded) {
+        stringResource(R.string.show_less)
+    } else {
+        stringResource(R.string.show_more)
+    }
 
     Surface(
         color = MaterialTheme.colorScheme.primary,
@@ -114,7 +115,7 @@ fun Greeting(
             modifier = Modifier
                 .padding(24.dp)
                 .fillMaxWidth()
-                .padding(bottom = extraPadding.coerceAtLeast(0.dp))
+                .animateContentSize()
         ) {
             Column(
                 modifier = Modifier.weight(1f)
@@ -127,12 +128,21 @@ fun Greeting(
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
+
+                if (expanded) {
+                    Text(
+                        text = (stringResource(R.string.hiden_message)).repeat(4),
+                    )
+                }
             }
 
-            ElevatedButton(
+            IconButton(
                 onClick = { expanded = !expanded }
             ) {
-                Text(if (expanded) "Show less" else "Show more")
+                Icon(
+                    imageVector = imageVector,
+                    contentDescription = contentDescription
+                )
             }
         }
     }
