@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -61,7 +63,7 @@ fun MyApp(modifier: Modifier = Modifier) {
         )
     } else {
         Greetings(
-            nameList = listOf("World", "Compose"),
+            nameList = List(1000) { "Item $it" },
             modifier = modifier
         )
     }
@@ -76,9 +78,9 @@ fun Greetings(
         color = MaterialTheme.colorScheme.background,
         modifier = modifier.padding(vertical = 4.dp)
     ) {
-        Column {
-            nameList.forEach {
-                Greeting(name = it)
+        LazyColumn {
+            items(nameList) { name ->
+                Greeting(name)
             }
         }
     }
