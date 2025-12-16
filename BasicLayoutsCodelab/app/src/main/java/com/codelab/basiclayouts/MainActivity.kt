@@ -128,7 +128,7 @@ fun FavoriteCollectionCard(
     Surface(
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surfaceVariant,
-        modifier = modifier.size(width = 255.dp, height = 80.dp)
+        modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -182,8 +182,9 @@ fun FavoriteCollectionsGrid(
     ) {
         items(favoriteCollectionsData) { item ->
             FavoriteCollectionCard(
-                item.drawable,
-                item.text
+                drawable = item.drawable,
+                text = item.text,
+                modifier = Modifier.size(width = 255.dp, height = 80.dp)
             )
         }
     }
