@@ -16,9 +16,7 @@
 package com.codelabs.state
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -35,36 +33,20 @@ fun WaterCounter(modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(16.dp)) {
         var count by remember { mutableStateOf(value = 0) }
         if (count > 0) {
-            var showTask by remember { mutableStateOf(true) }
-            if (showTask) {
-                WellnessTaskItem(
-                    taskName = "Have you taken your 15 minute walk today?",
-                    onClose = {
-                        showTask = false
-                    }
-                )
-            }
-            Text("You've had $count glasses.")
+            Text(
+                text = "You've had $count glasses.",
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
         }
         Log.d("WaterCounter", "Count from compose: $count")
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(8.dp)
+        Button(
+            onClick = {
+                count++
+                Log.d("WaterCounter", "Count from button: $count")
+            },
+            enabled = count < 10
         ) {
-            Button(
-                onClick = {
-                    count++
-                    Log.d("WaterCounter", "Count from button: $count")
-                },
-                enabled = count < 10
-            ) {
-                Text(text = "Add one")
-            }
-            Button(
-                onClick = { count = 0 }
-            ) {
-                Text(text = "Clear water count")
-            }
+            Text(text = "Add one")
         }
     }
 }
