@@ -1,10 +1,12 @@
 package com.codelabs.state
 
-data class WellnessTask(val id: Int, val label: String)
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
-fun getWellnessTasks() = List(30) { i ->
-    WellnessTask(
-        id = i,
-        label = "Task #$i"
-    )
+class WellnessTask(
+    val id: Int,
+    val label: String
+) {
+    var checked by mutableStateOf(false)
 }

@@ -17,23 +17,20 @@ package com.codelabs.state
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun WellnessScreen(
+    viewModel: WellnessViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
         WaterCounter()
-
-        val list = remember { getWellnessTasks().toMutableStateList() }
         WellnessTasksList(
-            list = list,
-            onCloseTask = {
-                list.remove(element = it)
-            }
+            list = viewModel.tasks,
+            onCheckedChange = { item, checked -> viewModel.changeChecked(item, checked) },
+            onCloseTask = viewModel::remove
         )
     }
 }
