@@ -42,6 +42,7 @@ import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
 import com.google.samples.apps.sunflower.R
 import com.google.samples.apps.sunflower.data.Plant
+import com.google.samples.apps.sunflower.theme.SunflowerTheme
 import com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel
 
 @Composable
@@ -145,7 +146,7 @@ private fun PlantDetailContentPreview() {
         imageUrl = ""
     )
 
-    MaterialTheme {
+    SunflowerTheme  {
         PlantDetailContent(plant)
     }
 }
@@ -154,7 +155,7 @@ private fun PlantDetailContentPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun PlantWateringPreview() {
-    MaterialTheme {
+    SunflowerTheme  {
         PlantWatering(wateringInterval = 7)
     }
 }
@@ -162,7 +163,7 @@ private fun PlantWateringPreview() {
 @Preview
 @Composable
 private fun PlantDescriptionPreview() {
-    MaterialTheme {
+    SunflowerTheme  {
         PlantDescription(description = "HTML<br><br>description")
     }
 }
